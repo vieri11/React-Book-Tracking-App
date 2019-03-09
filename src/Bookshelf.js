@@ -9,14 +9,12 @@ class Bookshelf extends Component {
 		const { type, bookList } = this.props
 		
 		return(
-		
-				<div className="bookshelf">
-                  <h2 className="bookshelf-title">{type}</h2>
-                  <div className="bookshelf-books">
-                    <Booklist bookList={bookList} />
-                  </div>
-                </div>
-		
+			<div className="bookshelf">
+			  <h2 className="bookshelf-title">{type}</h2>
+			  <div className="bookshelf-books">
+				<Booklist bookList={bookList} />
+			  </div>
+			</div>
 		)	
 	}	
 }
