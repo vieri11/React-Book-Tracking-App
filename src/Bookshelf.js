@@ -6,13 +6,13 @@ class Bookshelf extends Component {
 	
 	render() {
 		
-		const { type, bookList } = this.props
+		const { type, bookList, onUpdateCurrentShelf } = this.props
 		
 		return(
 			<div className="bookshelf">
 			  <h2 className="bookshelf-title">{type}</h2>
 			  <div className="bookshelf-books">
-				<Booklist bookList={bookList} />
+				<Booklist bookList={bookList} onUpdateCurrentShelf={onUpdateCurrentShelf} />
 			  </div>
 			</div>
 		)	

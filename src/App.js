@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
 	 read: [],
   }
   
-  componentDidMount() {
+    componentDidMount() {
 	
 	let currentlyReadingInit = [], wantToReadInit = [], readInit = [];
 	
@@ -42,6 +42,77 @@ class BooksApp extends React.Component {
       })
   }
   
+  transferBook = (book) => {
+	  
+	  if(book.shelf === 'currentlyReading') {
+		this.addCurrentlyReading(book);
+	  }
+	  
+	  if(book.shelf === 'wantToRead') {
+		this.addWantToRead(book);
+	  }
+	  
+	  if(book.shelf === 'read') {
+		this.addRead(book);
+	  }
+  }
+  
+  updateCurrentlyReading = (book, e) => {
+	book.shelf = e.target.value;
+	
+    this.setState((currentState) => ({
+      currentlyReading: currentState.currentlyReading.filter((b) => {
+        return b.id !== book.id
+      })
+    }))
+	
+	if(book.shelf != 'none') {
+		this.transferBook(book);
+	}
+  }
+  
+  updateWantToRead = (book, e) => {
+	book.shelf = e.target.value;
+	
+    this.setState((currentState) => ({
+      wantToRead: currentState.wantToRead.filter((b) => {
+        return b.id !== book.id
+      })
+    }))
+	
+	this.transferBook(book);
+  }
+  
+  updateRead = (book, e) => {
+	book.shelf = e.target.value;
+	
+    this.setState((currentState) => ({
+      read: currentState.read.filter((b) => {
+        return b.id !== book.id
+      })
+    }))
+	
+	this.transferBook(book);
+  }
+  
+  addCurrentlyReading = (book) => {
+    this.setState((currentState) => ({
+      currentlyReading: currentState.currentlyReading.concat([book])
+    }))
+  }
+  
+  addWantToRead = (book) => {
+    this.setState((currentState) => ({
+      wantToRead: currentState.wantToRead.concat([book])
+    }))
+  }
+  
+  addRead = (book) => {
+    this.setState((currentState) => ({
+      read: currentState.read.concat([book])
+    }))
+  }
+  
   render() {	
     return (
       <div className="app">
@@ -55,9 +126,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-				<Bookshelf type="Currently Reading" bookList={this.state.currentlyReading} />
-				<Bookshelf type="Want to Read" bookList={this.state.wantToRead} />
-				<Bookshelf type="Read" bookList={this.state.read} />
+				<Bookshelf type="Currently Reading" bookList={this.state.currentlyReading} onUpdateCurrentShelf={this.updateCurrentlyReading} />
+				<Bookshelf type="Want to Read" bookList={this.state.wantToRead} onUpdateCurrentShelf={this.updateWantToRead} />
+				<Bookshelf type="Read" bookList={this.state.read} onUpdateCurrentShelf={this.updateRead} />
               </div>
             </div>
 			<Link
