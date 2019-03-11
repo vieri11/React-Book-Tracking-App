@@ -15,9 +15,6 @@ class SearchBooks extends Component {
 		searchResults: []
 	}
 
-	
-	
-		
 	handleChange = (event) => {
 		this.updateQuery(event.target.value.trim())
 		this.updateSearchResult(event.target.value.trim())
@@ -29,24 +26,37 @@ class SearchBooks extends Component {
 	  
 	updateSearchResult = (query) => {
 		const { myReads } = this.props
-
+		let newSearchResults = [], updateSearchResults = []
+		
 		if(query !== '') {
-			console.log("inside bookapi");
 			BooksAPI.search(query)
 				.then((books) => {
-				console.log("inside bookapi");
-
+				console.log("inside bookapi", books);
+				console.log("inside bookapi", query);
+				
 				if(!books.error) {
+					
+					newSearchResults = books.map((book) => {
+								
+								myReads.forEach((myBook) => {
+									if( book.id === myBook.id ) {
+										book.shelf = myBook.shelf
+									}
+								})
+								
+								return book
+					})	
+					
 					this.setState(() => ({
-						searchResults : books
+						searchResults : newSearchResults
+						
 					}))
 				}
 				else {
 					this.setState(() => ({
 						searchResults : []
 					}))
-				}
-				
+				}	
 			})
 		}
 		else {
