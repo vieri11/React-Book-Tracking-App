@@ -3,16 +3,24 @@ import PropTypes from 'prop-types'
 
 class Book extends Component {
   
+	static propTypes = {
+		book: PropTypes.object.isRequired,
+		onUpdateCurrentShelf: PropTypes.func.isRequired
+	}
 	render() {
 		
 		const { book, onUpdateCurrentShelf } = this.props;
 		console.log('book', book);
 		
+		const smThumbnail = (book.imageLinks !== undefined)? book.imageLinks.smallThumbnail:''
+		const bookTitle = book.title
+		const bookAuth = (book.authors !== undefined)? book.authors[0] : ''
+		
 		return(
 			 <li>
 				<div className="book">
 				  <div className="book-top">
-					<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.smallThumbnail}")` }}></div>
+					<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${smThumbnail}")` }}></div>
 					<div className="book-shelf-changer">
 					  <select value={book.shelf} onChange={ (e) => onUpdateCurrentShelf(book, e)} >
 						<option value="move" disabled>Move to...</option>
@@ -23,9 +31,9 @@ class Book extends Component {
 					  </select>
 					</div>
 				  </div>
-				  <div className="book-title">{book.title}</div>
+				  <div className="book-title">{bookTitle}</div>
 				  <div className="book-authors">
-					
+					{bookAuth}
 				  </div>
 				</div>
 			 </li>

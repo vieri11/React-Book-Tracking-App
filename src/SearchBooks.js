@@ -1,27 +1,35 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import Booklist from './Booklist'
 
 class SearchBooks extends Component {
+	
+	static propTypes = {
+		myReads: PropTypes.array.isRequired,
+	}
+	
 	state = {
 		query: '',
 		searchResults: []
 	}
-	
 
-	 handleChange = (event) => {
+	
+	
+		
+	handleChange = (event) => {
 		this.updateQuery(event.target.value.trim())
 		this.updateSearchResult(event.target.value.trim())
-	  }
+	}
   
     updateQuery = (query) => {
 		this.setState({query: query})
 	  }
 	  
 	updateSearchResult = (query) => {
-		
+		const { myReads } = this.props
+
 		if(query !== '') {
 			console.log("inside bookapi");
 			BooksAPI.search(query)
@@ -63,7 +71,6 @@ class SearchBooks extends Component {
 	}
 	 
 	render() {
-
 
 		return(
 		  <div className="search-books">

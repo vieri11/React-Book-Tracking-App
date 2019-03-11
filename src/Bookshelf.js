@@ -4,13 +4,19 @@ import Booklist from './Booklist'
 
 class Bookshelf extends Component {
 	
+	static propTypes = {
+		bookType: PropTypes.string.isRequired,
+		bookList: PropTypes.array.isRequired,
+		onUpdateCurrentShelf: PropTypes.func.isRequired
+	}
+	
 	render() {
 		
-		const { type, bookList, onUpdateCurrentShelf } = this.props
+		const { bookType, bookList, onUpdateCurrentShelf } = this.props
 		
 		return(
 			<div className="bookshelf">
-			  <h2 className="bookshelf-title">{type}</h2>
+			  <h2 className="bookshelf-title">{bookType}</h2>
 			  <div className="bookshelf-books">
 				<Booklist bookList={bookList} onUpdateCurrentShelf={onUpdateCurrentShelf} />
 			  </div>

@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
 	 currentlyReading: [],
 	 wantToRead: [],
 	 read: [],
+	 myReads: [],
   }
   
     componentDidMount() {
@@ -37,7 +38,8 @@ class BooksApp extends React.Component {
         this.setState(() => ({
           currentlyReading : currentlyReadingInit,
 		  wantToRead : wantToReadInit,
-		  read : readInit
+		  read : readInit,
+		  myReads: books,
         }))
       })
   }
@@ -66,7 +68,7 @@ class BooksApp extends React.Component {
       })
     }))
 	
-	if(book.shelf != 'none') {
+	if(book.shelf !== 'none') {
 		this.transferBook(book);
 	}
   }
@@ -117,7 +119,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
 		<Route exact path='/search' render={() => (
-          <SearchBooks />
+          <SearchBooks myReads={this.state.myReads} />
         )} />
 		<Route exact path='/' render={() => (
           <div className="list-books">
@@ -126,9 +128,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-				<Bookshelf type="Currently Reading" bookList={this.state.currentlyReading} onUpdateCurrentShelf={this.updateCurrentlyReading} />
-				<Bookshelf type="Want to Read" bookList={this.state.wantToRead} onUpdateCurrentShelf={this.updateWantToRead} />
-				<Bookshelf type="Read" bookList={this.state.read} onUpdateCurrentShelf={this.updateRead} />
+				<Bookshelf bookType="Currently Reading" bookList={this.state.currentlyReading} onUpdateCurrentShelf={this.updateCurrentlyReading} />
+				<Bookshelf bookType="Want to Read" bookList={this.state.wantToRead} onUpdateCurrentShelf={this.updateWantToRead} />
+				<Bookshelf bookType="Read" bookList={this.state.read} onUpdateCurrentShelf={this.updateRead} />
               </div>
             </div>
 			<Link
