@@ -57,7 +57,6 @@ class SearchBooks extends Component {
 								continue
 							}	
 						}
-						
 						return book
 					})	
 					
@@ -67,12 +66,12 @@ class SearchBooks extends Component {
 					}))
 				}
 				else {
-					clearSearch()
+					this.clearSearch()
 				}	
 			})
 		}
 		else {
-			clearSearch()
+			this.clearSearch()
 			
 		}
 	}
