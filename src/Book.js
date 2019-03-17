@@ -14,7 +14,9 @@ class Book extends Component {
 		
 		const smThumbnail = (book.imageLinks !== undefined)? book.imageLinks.smallThumbnail:''
 		const bookTitle = book.title
-		const bookAuth = (book.authors !== undefined)? book.authors[0] : ''
+		const bookAuth = (book.authors !== undefined)? book.authors.join(', ') : ''
+		
+		
 		
 		return(
 			 <li>
@@ -22,7 +24,7 @@ class Book extends Component {
 				  <div className="book-top">
 					<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${smThumbnail}")` }}></div>
 					<div className="book-shelf-changer">
-					  <select value={book.shelf} onChange={ (e) => onUpdateCurrentShelf(book, e)} >
+					  <select value={book.shelf} onChange={ (e) => onUpdateCurrentShelf(book, e.target.value)} >
 						<option value="move" disabled>Move to...</option>
 						<option value="currentlyReading">Currently Reading</option>
 						<option value="wantToRead">Want to Read</option>

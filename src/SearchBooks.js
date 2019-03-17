@@ -25,26 +25,27 @@ class SearchBooks extends Component {
 	  }
 	  
 	updateSearchResult = (query) => {
+		let newSearchResults = []
 		const { myReads } = this.props
-		let newSearchResults = [], updateSearchResults = []
 		
 		if(query !== '') {
 			BooksAPI.search(query)
 				.then((books) => {
-				console.log("inside bookapi", books);
-				console.log("inside bookapi", query);
 				
 				if(!books.error) {
 					
 					newSearchResults = books.map((book) => {
 								
-								myReads.forEach((myBook) => {
-									if( book.id === myBook.id ) {
-										book.shelf = myBook.shelf
-									}
-								})
-								
-								return book
+						book.shelf = 'none'
+						
+						for(let i=0; i<myReads.length; i++) {
+							if( book.id === myReads[i].id ) {
+								book.shelf = myReads[i].shelf
+								continue
+							}	
+						}
+						
+						return book
 					})	
 					
 					this.setState(() => ({
@@ -65,23 +66,9 @@ class SearchBooks extends Component {
 				}))
 		}
 	}
-	
-	updateCurrentlyReading = (book, e) => {
-		book.shelf = e.target.value;
-		
-		this.setState((currentState) => ({
-		  currentlyReading: currentState.currentlyReading.filter((b) => {
-			return b.id !== book.id
-		  })
-		}))
-		
-		if(book.shelf !== 'none') {
-			this.transferBook(book);
-		}
-	}
 	 
 	render() {
-
+		const { onUpdateCurrentShelf } = this.props
 		return(
 		  <div className="search-books">
             <div className="search-books-bar">
@@ -110,7 +97,7 @@ class SearchBooks extends Component {
 			  
             </div>
             <div className="search-books-results">
-              <Booklist bookList={this.state.searchResults} onUpdateCurrentShelf={this.updateCurrentlyReading} />
+              <Booklist bookList={this.state.searchResults} onUpdateCurrentShelf={onUpdateCurrentShelf} />
             </div>
           </div>
 		)	
