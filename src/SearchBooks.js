@@ -15,15 +15,28 @@ class SearchBooks extends Component {
 		searchResults: []
 	}
 
+	/**
+	* @description Function handler for search input
+	* @param {object} event - The event object
+	*/
 	handleChange = (event) => {
 		this.updateQuery(event.target.value.trim())
 		this.updateSearchResult(event.target.value.trim())
 	}
   
+    /**
+    * @description Update this.state.query
+    * @param {string} query
+    */
     updateQuery = (query) => {
 		this.setState({query: query})
 	  }
-	  
+	
+	/**
+    * @description Update this.state.searchResults with books
+	* from the BooksAPI.search combined with myReads shelf data
+    * @param {string} query
+    */
 	updateSearchResult = (query) => {
 		let newSearchResults = []
 		const { myReads } = this.props
@@ -54,19 +67,25 @@ class SearchBooks extends Component {
 					}))
 				}
 				else {
-					this.setState(() => ({
-						searchResults : []
-					}))
+					clearSearch()
 				}	
 			})
 		}
 		else {
-			this.setState(() => ({
-					searchResults : []
-				}))
+			clearSearch()
+			
 		}
 	}
 	 
+	/**
+    * @description Clear this.state.searchResults
+    */ 
+	clearSearch() {
+		this.setState(() => ({
+			searchResults : []
+		}))
+	}
+	
 	render() {
 		const { onUpdateCurrentShelf } = this.props
 		return(
@@ -86,15 +105,10 @@ class SearchBooks extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */
-				
-				
 				}
                 <input type="text" placeholder="Search by title or author" autoFocus value={this.state.query}
 					onChange={this.handleChange}/>
               </div>
-			  
-			  
-			  
             </div>
             <div className="search-books-results">
               <Booklist bookList={this.state.searchResults} onUpdateCurrentShelf={onUpdateCurrentShelf} />

@@ -11,6 +11,10 @@ class BooksApp extends React.Component {
 	 myReads: [],
   }
   
+  /**
+  * @description componentDidMount function to populate myReads 
+  * from BooksAPI.getAll
+  */
   componentDidMount() {
 	
     BooksAPI.getAll()
@@ -22,16 +26,24 @@ class BooksApp extends React.Component {
       })
   }
   
+  /**
+  * @description filters myReads for individual Bookshelfs
+  * @param {array} shelfName - Array of my books
+  */
   shelf = (shelfName) => {
 	  
 	  const newShelf = this.state.myReads.filter((b) => {
-			return b.shelf === shelfName
-		  })
+		return b.shelf === shelfName
+	  })
 		  
 	  return newShelf
   }
   
-  
+  /**
+  * @description Update myReads array
+  * @param {array} book - Array of shelf books
+  * @param {object} e - The event object
+  */
   updateShelf = (book, e) => {
 	book.shelf = e;
 
@@ -46,10 +58,8 @@ class BooksApp extends React.Component {
 		  myReads: currentState.myReads.concat([book])
 		}))
 	}
-
   }
   
-
   render() {	
     return (
       <div className="app">

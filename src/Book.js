@@ -10,14 +10,11 @@ class Book extends Component {
 	render() {
 		
 		const { book, onUpdateCurrentShelf } = this.props;
-		console.log('book', book);
 		
 		const smThumbnail = (book.imageLinks !== undefined)? book.imageLinks.smallThumbnail:''
 		const bookTitle = book.title
 		const bookAuth = (book.authors !== undefined)? book.authors.join(', ') : ''
-		
-		
-		
+
 		return(
 			 <li>
 				<div className="book">
