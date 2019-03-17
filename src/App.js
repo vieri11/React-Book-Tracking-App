@@ -58,6 +58,8 @@ class BooksApp extends React.Component {
 		  myReads: currentState.myReads.concat([book])
 		}))
 	}
+	
+	BooksAPI.update(book, book.shelf)
   }
   
   render() {	
