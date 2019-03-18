@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Booklist from './Booklist'
+import {DebounceInput} from 'react-debounce-input'
 
 class SearchBooks extends Component {
 	
@@ -20,8 +21,8 @@ class SearchBooks extends Component {
 	* @param {object} event - The event object
 	*/
 	handleChange = (event) => {
-		this.updateQuery(event.target.value.trim())
-		this.updateSearchResult(event.target.value.trim())
+		this.updateQuery(event.target.value)
+		this.updateSearchResult(event.target.value)
 	}
   
     /**
@@ -105,8 +106,14 @@ class SearchBooks extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */
 				}
-                <input type="text" placeholder="Search by title or author" autoFocus value={this.state.query}
-					onChange={this.handleChange}/>
+				
+				<DebounceInput
+					type="text"
+					onChange={this.handleChange}
+					placeholder="Search by title or author"
+					value={this.state.query}
+					autoFocus />
+
               </div>
             </div>
             <div className="search-books-results">

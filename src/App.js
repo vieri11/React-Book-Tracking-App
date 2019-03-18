@@ -1,9 +1,10 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import Bookshelf from './Bookshelf'
+import NoMatch from './NoMatch'
 import SearchBooks from './SearchBooks'
 import './App.css'
-import { Route, Link } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
 	
@@ -65,7 +66,8 @@ class BooksApp extends React.Component {
   render() {	
     return (
       <div className="app">
-		<Route exact path='/search' render={() => (
+	    <Switch>
+		<Route path='/search' render={() => (
           <SearchBooks myReads={this.state.myReads} onUpdateCurrentShelf={this.updateShelf} />
         )} />
 		<Route exact path='/' render={() => (
@@ -86,6 +88,8 @@ class BooksApp extends React.Component {
 			</Link>
           </div>
 		)} />
+		<Route component={NoMatch} />
+		</Switch>
       </div>
     )
   }
